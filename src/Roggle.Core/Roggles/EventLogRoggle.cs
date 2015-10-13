@@ -5,7 +5,7 @@ using System.Diagnostics;
 namespace Roggle.Core
 {
     /// <summary>
-    /// Roggle class based on the Windows EventLog class.
+    /// Roggle interface based on the Windows EventLog class.
     /// </summary>
     public class EventLogRoggle : IRoggle
     {
@@ -15,12 +15,12 @@ namespace Roggle.Core
         private const int MaxEventLogEntryLength = 30000;
 
         /// <summary>
-        /// Event source name used to created and write to the event log. Will be filled by application config with the key LoggerEventSourceName. Default is Roggle.
+        /// Event source name used to created and write to the event log. Will be filled by application config with the key RoggleEventSourceName. Default is Roggle.
         /// </summary>
         public string EventSourceName { get; set; }
 
         /// <summary>
-        /// Event log name used to create the event log. Will be filled by application config with the key LoggerEventLogName. Default is Application.
+        /// Event log name used to create the event log. Will be filled by application config with the key RoggleEventLogName. Default is Application.
         /// </summary>
         public string EventLogName { get; set; }
 
@@ -32,8 +32,8 @@ namespace Roggle.Core
             try
             {
                 // Get event source name and event log name from app.config, set default value if null
-                EventSourceName = ConfigurationManager.AppSettings.Get("LoggerEventSourceName") ?? "Roggle";
-                EventLogName = ConfigurationManager.AppSettings.Get("LoggerEventLogName") ?? "Application";
+                EventSourceName = ConfigurationManager.AppSettings.Get("RoggleEventSourceName") ?? "Roggle";
+                EventLogName = ConfigurationManager.AppSettings.Get("RoggleEventLogName") ?? "Application";
 
                 // Check if event source does not already exists
                 if (!EventLog.SourceExists(EventSourceName))
@@ -47,7 +47,7 @@ namespace Roggle.Core
             }
             catch (Exception e)
             {
-                // Exception occurs, encapsulate it inside a Logger exception and throw it
+                // Exception occurs, encapsulate it inside a Roggle exception and throw it
                 throw new RoggleException(string.Format("Application event Roggle cannot create the event source with source name {0} and log name {1}.", EventSourceName, EventLogName), e);
             }
         }
@@ -77,7 +77,7 @@ namespace Roggle.Core
         }
 
         /// <summary>
-        /// Base event writing for application event logger.
+        /// Base event writing for application event Roggle.
         /// </summary>
         /// <param name="message">The message to log.</param>
         /// <param name="type">The type of message to log.</param>
