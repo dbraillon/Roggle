@@ -1,10 +1,10 @@
 ﻿
-namespace Roggler.Core
+namespace Roggle.Core
 {
     /// <summary>
-    /// Interface used to create or use any Roggler.
+    /// Interface used to create or use any Roggle.
     /// </summary>
-    public interface IRoggler
+    public interface IRoggle
     {
         /// <summary>
         /// Method to create the underlying logging system.

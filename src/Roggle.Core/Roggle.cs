@@ -1,23 +1,23 @@
 ﻿using System;
 
-namespace Roggler.Core
+namespace Roggle.Core
 {
-    public static class Roggler
+    public static class Roggle
     {
         /// <summary>
-        /// Current Roggler, is null unless you called Roggler.Use<> in the first place.
+        /// Current Roggle, is null unless you called Roggle.Use<> in the first place.
         /// </summary>
-        public static IRoggler Current { get; set; }
+        public static IRoggle Current { get; set; }
 
         /// <summary>
-        /// Specify to the Roggler to use a given type of log system.
+        /// Specify to the Roggle to use a given type of log system.
         /// </summary>
-        /// <typeparam name="TRoggler">An existing log system in Roggler.Core.</typeparam>
+        /// <typeparam name="TRoggle">An existing log system in Roggle.Core.</typeparam>
         /// <param name="logUnhandledException">Whether you want or not to log unhandled exception.</param>
-        public static void Use<TRoggler>(bool logUnhandledException = true) where TRoggler : IRoggler
+        public static void Use<TRoggle>(bool logUnhandledException = true) where TRoggle : IRoggle
         {
-            // Create the roggler
-            Current = (TRoggler)Activator.CreateInstance(typeof(TRoggler));
+            // Create the Roggle
+            Current = (TRoggle)Activator.CreateInstance(typeof(TRoggle));
             Current.Create();
 
             // Check if the user wants to log unhandled exceptions

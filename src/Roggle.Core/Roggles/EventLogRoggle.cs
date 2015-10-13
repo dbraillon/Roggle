@@ -2,12 +2,12 @@
 using System.Configuration;
 using System.Diagnostics;
 
-namespace Roggler.Core
+namespace Roggle.Core
 {
     /// <summary>
-    /// Roggler class based on the Windows EventLog class.
+    /// Roggle class based on the Windows EventLog class.
     /// </summary>
-    public class EventLogRoggler : IRoggler
+    public class EventLogRoggle : IRoggle
     {
         /// <summary>
         /// Max event message length.
@@ -15,7 +15,7 @@ namespace Roggler.Core
         private const int MaxEventLogEntryLength = 30000;
 
         /// <summary>
-        /// Event source name used to created and write to the event log. Will be filled by application config with the key LoggerEventSourceName. Default is Roggler.
+        /// Event source name used to created and write to the event log. Will be filled by application config with the key LoggerEventSourceName. Default is Roggle.
         /// </summary>
         public string EventSourceName { get; set; }
 
@@ -32,7 +32,7 @@ namespace Roggler.Core
             try
             {
                 // Get event source name and event log name from app.config, set default value if null
-                EventSourceName = ConfigurationManager.AppSettings.Get("LoggerEventSourceName") ?? "Roggler";
+                EventSourceName = ConfigurationManager.AppSettings.Get("LoggerEventSourceName") ?? "Roggle";
                 EventLogName = ConfigurationManager.AppSettings.Get("LoggerEventLogName") ?? "Application";
 
                 // Check if event source does not already exists
@@ -42,13 +42,13 @@ namespace Roggler.Core
                     EventLog.CreateEventSource(EventSourceName, EventLogName);
 
                     // Write a test entry
-                    EventLog.WriteEntry(EventSourceName, "Roggler in da place !", EventLogEntryType.Information);
+                    EventLog.WriteEntry(EventSourceName, "Roggle in da place !", EventLogEntryType.Information);
                 }
             }
             catch (Exception e)
             {
                 // Exception occurs, encapsulate it inside a Logger exception and throw it
-                throw new RogglerException(string.Format("Application event roggler cannot create the event source with source name {0} and log name {1}.", EventSourceName, EventLogName), e);
+                throw new RoggleException(string.Format("Application event Roggle cannot create the event source with source name {0} and log name {1}.", EventSourceName, EventLogName), e);
             }
         }
 
@@ -96,8 +96,8 @@ namespace Roggler.Core
             }
             catch (Exception e)
             {
-                // Exception occurs, encapsulate it inside a Roggler exception and throw it
-                throw new RogglerException(string.Format("Application event roggler cannot write inside the event source {0}. Wanted to write {1}", EventSourceName, message), e);
+                // Exception occurs, encapsulate it inside a Roggle exception and throw it
+                throw new RoggleException(string.Format("Application event Roggle cannot write inside the event source {0}. Wanted to write {1}", EventSourceName, message), e);
             }
         }
     }

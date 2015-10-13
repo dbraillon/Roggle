@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Roggler.ToolBox")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("Roggle.ToolBox")]
+[assembly: AssemblyDescription("Tool box for Roggle solution.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Roggler.ToolBox")]
+[assembly: AssemblyCompany("Davy Braillon")]
+[assembly: AssemblyProduct("Roggle.ToolBox")]
 [assembly: AssemblyCopyright("Copyright ©  2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

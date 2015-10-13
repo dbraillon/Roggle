@@ -1,9 +1,9 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Roggler.Tests
+namespace Roggle.Tests
 {
     [TestClass]
-    public class EventLogRogglerTests
+    public class EventLogRoggleTests
     {
         
     }

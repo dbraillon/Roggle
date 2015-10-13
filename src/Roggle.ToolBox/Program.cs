@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.Linq;
 
-namespace Roggler.ToolBox
+namespace Roggle.ToolBox
 {
     class Program
     {
@@ -73,7 +73,7 @@ namespace Roggler.ToolBox
 
             try
             {
-                eventSource = eventSource ?? "Roggler";
+                eventSource = eventSource ?? "Roggle";
                 eventLog = eventLog ?? "Application";
 
                 if (!EventLog.SourceExists(eventSource))
