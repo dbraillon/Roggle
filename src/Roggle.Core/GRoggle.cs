@@ -2,7 +2,7 @@
 
 namespace Roggle.Core
 {
-    public static class Roggle
+    public static class GRoggle
     {
         /// <summary>
         /// Current Roggle, is null unless you called Roggle.Use<> in the first place.

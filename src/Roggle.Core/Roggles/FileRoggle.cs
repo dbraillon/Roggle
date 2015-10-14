@@ -29,6 +29,9 @@ namespace Roggle.Core
                 // Get path from app.config, set default value if null
                 LogFilePath = ConfigurationManager.AppSettings.Get("RoggleLogFilePath") ?? Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Roggle", "default.log");
 
+                // Create path if not exists
+                Directory.CreateDirectory(Path.GetDirectoryName(LogFilePath));
+
                 // Write a test entry and create the file if necessary
                 File.AppendAllLines(LogFilePath, new string[] { "Log file successfuly created !" });
             }

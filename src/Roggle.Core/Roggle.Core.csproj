@@ -46,7 +46,7 @@
     <Compile Include="Roggles\EmailRoggle.cs" />
     <Compile Include="Roggles\EventLogRoggle.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Roggle.cs" />
+    <Compile Include="GRoggle.cs" />
     <Compile Include="Roggles\FileRoggle.cs" />
   </ItemGroup>
   <ItemGroup />

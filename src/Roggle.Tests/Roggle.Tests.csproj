@@ -3,11 +3,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{9A1830CF-B90A-4771-B85A-F7212EC18ADF}</ProjectGuid>
+    <ProjectGuid>{3F7FB237-3DA8-4009-9899-FD850B42C85E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Roggler.Tests</RootNamespace>
-    <AssemblyName>Roggler.Tests</AssemblyName>
+    <RootNamespace>Roggle.Tests</RootNamespace>
+    <AssemblyName>Roggle.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -36,6 +36,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -50,8 +51,17 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="EventLogRogglerTests.cs" />
+    <Compile Include="RoggleTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Roggle.Core\Roggle.Core.csproj">
+      <Project>{de43fcfe-19a2-4d0c-8f4a-3d3c28b152d7}</Project>
+      <Name>Roggle.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
