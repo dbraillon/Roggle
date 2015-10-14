@@ -1,3 +1,8 @@
+1.0.2.0 * Breaking changes
+	- Hotfix in FileRoggle
+	- Add basic tests
+	- Rename Roggle static class to GRoggle
+
 1.0.1.0
 	- Add FileRoggle
 	- Add EmailRoggle
