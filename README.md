@@ -17,7 +17,7 @@ You can use Roggle in any project, but it must be first initialized. In a web ap
 ```csharp
 protected void Application_Start()
 {
-    Roggle.Use<FileRoggle>();
+    GRoggle.Use<FileRoggle>();
 }
 ```
 
@@ -27,8 +27,8 @@ Usage
 After initialization you can call Roggle this way:
 
 ```csharp
-Roggle.Current.WriteDebug("This is a debug message");
-Roggle.Current.WriteInformation("This is an information message");
-Roggle.Current.WriteWarning("This is a warning message");
-Roggle.Current.WriteError("This is an error message");
+GRoggle.Current.WriteDebug("This is a debug message");
+GRoggle.Current.WriteInformation("This is an information message");
+GRoggle.Current.WriteWarning("This is a warning message");
+GRoggle.Current.WriteError("This is an error message");
 ```
