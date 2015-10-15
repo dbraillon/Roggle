@@ -46,6 +46,11 @@ namespace Roggle.Core
         public string Subject { get; set; }
 
         /// <summary>
+        /// Whether or not you want to use secure connection with Smtp server. Default is False.
+        /// </summary>
+        public bool UseSsl { get; set; }
+
+        /// <summary>
         /// Retrieve the data in app.config.
         /// </summary>
         public void Create()
@@ -60,6 +65,7 @@ namespace Roggle.Core
                 From = ConfigurationManager.AppSettings.Get("RoggleEmailFrom");
                 To = ConfigurationManager.AppSettings.Get("RoggleEmailTo");
                 Subject = ConfigurationManager.AppSettings.Get("RoggleEmailSubject");
+                UseSsl = bool.Parse(ConfigurationManager.AppSettings.Get("RoggleEmailUseSsl") ?? "False");
             }
             catch (Exception e)
             {
@@ -109,6 +115,7 @@ namespace Roggle.Core
 
                     client.Host = Host;
                     client.Port = Port;
+                    client.EnableSsl = UseSsl;
                     client.Credentials = new NetworkCredential(Login, Password);
                     client.Send(mail);
                 }
