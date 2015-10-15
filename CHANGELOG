@@ -1,3 +1,6 @@
+1.0.3.0
+	- Add optional UseSsl in EmailRoggle
+
 1.0.2.0 * Breaking changes
 	- Hotfix in FileRoggle
 	- Add basic tests
