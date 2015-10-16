@@ -1,6 +1,8 @@
 Roggle
 ======
 
+[![Latest version](https://img.shields.io/nuget/v/Roggle.svg)](https://www.nuget.org/packages?q=roggle) [![MIT  License](https://img.shields.io/badge/license-MIT-blue.svg)](http://www.gnu.org/licenses/lgpl-3.0.html)
+
 Simple log system for .Net applications.
 
 Installation
