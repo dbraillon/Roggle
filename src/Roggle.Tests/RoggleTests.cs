@@ -1,13 +1,13 @@
 ﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using Roggle.Core;
 
 namespace Roggle.Tests
 {
-    [TestClass]
+    [TestFixture]
     public class RoggleTests
     {
-        [TestMethod]
+        [Test]
         public void FileRoggleTests()
         {
             GRoggle.Use<FileRoggle>();
@@ -17,7 +17,7 @@ namespace Roggle.Tests
             GRoggle.Current.WriteError("I'm testing an error message !");
         }
 
-        [TestMethod]
+        [Test]
         public void EventLogRoggleTests()
         {
             GRoggle.Use<EventLogRoggle>();
@@ -27,7 +27,7 @@ namespace Roggle.Tests
             GRoggle.Current.WriteError("I'm testing an error message !");
         }
 
-        [TestMethod]
+        [Test]
         public void EmailRoggleTests()
         {
             GRoggle.Use<EmailRoggle>();
