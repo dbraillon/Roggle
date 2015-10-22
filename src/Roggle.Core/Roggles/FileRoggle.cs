@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Configuration;
+using System.Linq;
 using System.IO;
 
 namespace Roggle.Core
@@ -76,6 +77,29 @@ namespace Roggle.Core
             {
                 // Try to write in file log
                 File.AppendAllLines(LogFilePath, new string[] { string.Format("{0} > {1}", DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss"), message) });
+
+                #region Check if file size is not max
+
+                bool isLessThanMax = false;
+                FileInfo logFile = new FileInfo(LogFilePath);
+
+                while (!isLessThanMax)
+                {
+                    if (logFile.Length >= MaxFileLength)
+                    {
+                        // Get all lines
+                        string[] contentLines = File.ReadAllLines(LogFilePath);
+
+                        // Skip first line
+                        File.WriteAllLines(LogFilePath, contentLines.Skip(1).ToArray());
+                    }
+                    else
+                    {
+                        isLessThanMax = true;
+                    }
+                }
+
+                #endregion
             }
             catch (Exception e)
             {

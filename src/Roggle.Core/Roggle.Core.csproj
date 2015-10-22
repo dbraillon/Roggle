@@ -43,6 +43,8 @@
   <ItemGroup>
     <Compile Include="IRoggle.cs" />
     <Compile Include="RoggleException.cs" />
+    <Compile Include="RoggleExtensions.cs" />
+    <Compile Include="RoggleHelper.cs" />
     <Compile Include="Roggles\EmailRoggle.cs" />
     <Compile Include="Roggles\EventLogRoggle.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
