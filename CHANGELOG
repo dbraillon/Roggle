@@ -1,12 +1,15 @@
-1.0.3.0
+1.0.4
+	- Fix FileRoggle MaxFileLength use
+
+1.0.3
 	- Add optional UseSsl in EmailRoggle
 
-1.0.2.0 * Breaking changes
+1.0.2 * Breaking changes
 	- Hotfix in FileRoggle
 	- Add basic tests
 	- Rename Roggle static class to GRoggle
 
-1.0.1.0
+1.0.1
 	- Add FileRoggle
 	- Add EmailRoggle
 	- Change name to Roggle
