@@ -27,13 +27,13 @@ namespace Roggle.Core
         /// <summary>
         /// Create the event source if not exist and log. In order to create the event source, the application must have administrative rights.
         /// </summary>
-        public void Create()
+        public EventLogRoggle(string eventSourceName, string eventLogName)
         {
             try
             {
                 // Get event source name and event log name from app.config, set default value if null
-                EventSourceName = ConfigurationManager.AppSettings.Get("RoggleEventSourceName") ?? "Roggle";
-                EventLogName = ConfigurationManager.AppSettings.Get("RoggleEventLogName") ?? "Application";
+                EventSourceName = eventSourceName;
+                EventLogName = eventLogName;
 
                 // Check if event source does not already exists
                 if (!EventLog.SourceExists(EventSourceName))
@@ -52,7 +52,7 @@ namespace Roggle.Core
             }
         }
 
-        public void WriteDebug(string message)
+        public void FormatDebug(string message)
         {
             // Write debug message
             Write(message, EventLogEntryType.Information);

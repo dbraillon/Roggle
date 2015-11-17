@@ -53,46 +53,37 @@ namespace Roggle.Core
         /// <summary>
         /// Retrieve the data in app.config.
         /// </summary>
-        public void Create()
+        public EmailRoggle(string host, int port, string login, string password, string from, string to, string subject, bool useSsl = false)
         {
-            try
-            {
-                // Get all necessary data from app.config, no default value
-                Host = ConfigurationManager.AppSettings.Get("RoggleEmailHost");
-                Port = int.Parse(ConfigurationManager.AppSettings.Get("RoggleEmailPort"));
-                Login = ConfigurationManager.AppSettings.Get("RoggleEmailLogin");
-                Password = ConfigurationManager.AppSettings.Get("RoggleEmailPassword");
-                From = ConfigurationManager.AppSettings.Get("RoggleEmailFrom");
-                To = ConfigurationManager.AppSettings.Get("RoggleEmailTo");
-                Subject = ConfigurationManager.AppSettings.Get("RoggleEmailSubject");
-                UseSsl = bool.Parse(ConfigurationManager.AppSettings.Get("RoggleEmailUseSsl") ?? "False");
-            }
-            catch (Exception e)
-            {
-                // Exception occurs, encapsulate it inside a Roggle exception and throw it
-                throw new RoggleException("Email Roggle cannot retrieve the data in app.config.", e);
-            }
+            Host = host;
+            Port = port;
+            Login = login;
+            Password = password;
+            From = from;
+            To = to;
+            Subject = subject;
+            UseSsl = useSsl;
         }
 
-        public void WriteDebug(string message)
+        public virtual void FormatDebug(string message)
         {
             // Write debug message
             Write(string.Format("Debug{0}{1}", Environment.NewLine, message));
         }
 
-        public void WriteInformation(string message)
+        public virtual void WriteInformation(string message)
         {
             // Write information message
             Write(string.Format("Information{0}{1}", Environment.NewLine, message));
         }
 
-        public void WriteWarning(string message)
+        public virtual void WriteWarning(string message)
         {
             // Write warning message
             Write(string.Format("Warning{0}{1}", Environment.NewLine, message));
         }
 
-        public void WriteError(string message)
+        public virtual void WriteError(string message)
         {
             // Write error message
             Write(string.Format("Error{0}{1}", Environment.NewLine, message));
@@ -102,7 +93,7 @@ namespace Roggle.Core
         /// Base event writing for application event Roggle.
         /// </summary>
         /// <param name="message">The message to log.</param>
-        public void Write(string message)
+        public virtual void Write(string message)
         {
             try
             {

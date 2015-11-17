@@ -8,7 +8,7 @@ namespace Roggle.Core
     /// <summary>
     /// Roggle interface based on the Windows FileInfo class.
     /// </summary>
-    public class FileRoggle : IRoggle
+    public class FileRoggle : BaseRoggle
     {
         /// <summary>
         /// Max file length bytes. 10 Mo.
@@ -23,12 +23,12 @@ namespace Roggle.Core
         /// <summary>
         /// Create the file log. If the file does not exist, this method will create the file.
         /// </summary>
-        public void Create()
+        public FileRoggle(string logFilePath)
         {
             try
             {
                 // Get path from app.config, set default value if null
-                LogFilePath = ConfigurationManager.AppSettings.Get("RoggleLogFilePath") ?? Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Roggle", "default.log");
+                LogFilePath = logFilePath;
 
                 // Create path if not exists
                 Directory.CreateDirectory(Path.GetDirectoryName(LogFilePath));

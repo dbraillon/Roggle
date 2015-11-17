@@ -10,8 +10,10 @@ namespace Roggle.Tests
         [Test]
         public void FileRoggleTests()
         {
-            GRoggle.Use<FileRoggle>();
-            GRoggle.Current.WriteDebug("I'm testing a debug message !");
+            GRoggle.
+
+            GRoggle.Use(null);
+            GRoggle.Current.FormatDebug("I'm testing a debug message !");
             GRoggle.Current.WriteInformation("I'm testing an information message !");
             GRoggle.Current.WriteWarning("I'm testing a warning message !");
             GRoggle.Current.WriteError("I'm testing an error message !");
@@ -21,7 +23,7 @@ namespace Roggle.Tests
         public void EventLogRoggleTests()
         {
             GRoggle.Use<EventLogRoggle>();
-            GRoggle.Current.WriteDebug("I'm testing a debug message !");
+            GRoggle.Current.FormatDebug("I'm testing a debug message !");
             GRoggle.Current.WriteInformation("I'm testing an information message !");
             GRoggle.Current.WriteWarning("I'm testing a warning message !");
             GRoggle.Current.WriteError("I'm testing an error message !");
@@ -31,7 +33,7 @@ namespace Roggle.Tests
         public void EmailRoggleTests()
         {
             GRoggle.Use<EmailRoggle>();
-            GRoggle.Current.WriteDebug("I'm testing a debug message !");
+            GRoggle.Current.FormatDebug("I'm testing a debug message !");
             GRoggle.Current.WriteInformation("I'm testing an information message !");
             GRoggle.Current.WriteWarning("I'm testing a warning message !");
             GRoggle.Current.WriteError("I'm testing an error message !");
