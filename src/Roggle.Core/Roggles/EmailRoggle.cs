@@ -8,7 +8,7 @@ namespace Roggle.Core
     /// <summary>
     /// Roggle interface based on the System.Net.Mail class.
     /// </summary>
-    public class EmailRoggle : IRoggle
+    public class EmailRoggle : BaseRoggle
     {
         /// <summary>
         /// Host used to connect on a Smtp server. Will be filled by application config with the key RoggleEmailHost.
@@ -53,7 +53,8 @@ namespace Roggle.Core
         /// <summary>
         /// Retrieve the data in app.config.
         /// </summary>
-        public EmailRoggle(string host, int port, string login, string password, string from, string to, string subject, bool useSsl = false)
+        public EmailRoggle(string host, int port, string login, string password, string from, string to, string subject, bool useSsl = false, RoggleLogLevel acceptedLogLevels = RoggleLogLevel.Info | RoggleLogLevel.Warning | RoggleLogLevel.Error)
+            : base(acceptedLogLevels)
         {
             Host = host;
             Port = port;
@@ -65,35 +66,11 @@ namespace Roggle.Core
             UseSsl = useSsl;
         }
 
-        public virtual void FormatDebug(string message)
-        {
-            // Write debug message
-            Write(string.Format("Debug{0}{1}", Environment.NewLine, message));
-        }
-
-        public virtual void WriteInformation(string message)
-        {
-            // Write information message
-            Write(string.Format("Information{0}{1}", Environment.NewLine, message));
-        }
-
-        public virtual void WriteWarning(string message)
-        {
-            // Write warning message
-            Write(string.Format("Warning{0}{1}", Environment.NewLine, message));
-        }
-
-        public virtual void WriteError(string message)
-        {
-            // Write error message
-            Write(string.Format("Error{0}{1}", Environment.NewLine, message));
-        }
-
         /// <summary>
         /// Base event writing for application event Roggle.
         /// </summary>
         /// <param name="message">The message to log.</param>
-        public virtual void Write(string message)
+        public virtual void WriteBase(string message, RoggleLogLevel level = RoggleLogLevel.Error)
         {
             try
             {
@@ -116,6 +93,23 @@ namespace Roggle.Core
                 // Exception occurs, encapsulate it inside a Roggle exception and throw it
                 throw new RoggleException(string.Format("Email Roggle cannot send an email to {0}. Wanted to write {1}", To, message), e);
             }
+        }
+
+        public override void Write(string message, RoggleLogLevel level = RoggleLogLevel.Error)
+        {
+            WriteBase(message, level);
+        }
+
+        public override void Write(Exception e, RoggleLogLevel level = RoggleLogLevel.Error)
+        {
+            WriteBase(e.ToString(), level);
+        }
+
+        public override void Write(string message, Exception e, RoggleLogLevel level = RoggleLogLevel.Error)
+        {
+            string concatenatedMessage = string.Join(Environment.NewLine, message, e.ToString());
+
+            WriteBase(concatenatedMessage, level);
         }
     }
 }

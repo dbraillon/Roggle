@@ -44,7 +44,7 @@ namespace Roggle.Core
             }
         }
 
-        public static void Write(string message, RoggleLogLevel level)
+        public static void Write(string message, RoggleLogLevel level = RoggleLogLevel.Error)
         {
             foreach (BaseRoggle roggle in Instance.Roggles)
             {
@@ -55,27 +55,34 @@ namespace Roggle.Core
             }
         }
 
+        public static void Write(Exception exception, RoggleLogLevel level = RoggleLogLevel.Error)
+        {
+            foreach (BaseRoggle roggle in Instance.Roggles)
+            {
+                if (roggle.AcceptedLogLevels.HasFlag(level))
+                {
+                    roggle.Write(exception, level);
+                }
+            }
+        }
+
+        public static void Write(string message, Exception exception, RoggleLogLevel level = RoggleLogLevel.Error)
+        {
+            foreach (BaseRoggle roggle in Instance.Roggles)
+            {
+                if (roggle.AcceptedLogLevels.HasFlag(level))
+                {
+                    roggle.Write(message, exception, level);
+                }
+            }
+        }
+
 
         public IList<IRoggle> Roggles { get; set; }
 
         private GRoggle()
         {
 
-        }
-
-        // From AppDomain.CurrentDomain.UnhandledException
-        private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs args)
-        {
-            // Cast object to Exception
-            Exception e = (Exception)args.ExceptionObject;
-
-            // Write unhandled error in used logger
-            Current.WriteError(string.Format("Unhandled exception thrown:{0}{1}", Environment.NewLine, e.ToString()));
-        }
-
-        public void Write(string message, RoggleLogLevel level = RoggleLogLevel.Error)
-        {
-            throw new NotImplementedException();
         }
     }
 }

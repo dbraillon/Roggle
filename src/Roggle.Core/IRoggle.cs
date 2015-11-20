@@ -9,6 +9,8 @@ namespace Roggle.Core
     public interface IRoggle
     {
         void Write(string message, RoggleLogLevel level = RoggleLogLevel.Error);
+        void Write(Exception e, RoggleLogLevel level = RoggleLogLevel.Error);
+        void Write(string message, Exception e, RoggleLogLevel level = RoggleLogLevel.Error);
         void UnhandledException(object sender, UnhandledExceptionEventArgs args);
     }
 }

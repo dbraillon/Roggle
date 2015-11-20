@@ -8,6 +8,5 @@ namespace Roggle.Core
 {
     public static class RoggleExtensions
     {
-
     }
 }
