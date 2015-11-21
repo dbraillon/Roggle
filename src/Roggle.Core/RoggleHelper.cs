@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.ComponentModel.DataAnnotations;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace Roggle.Core
 {
@@ -40,6 +38,15 @@ namespace Roggle.Core
             }
 
             throw new AggregateException(exceptions);
+        }
+
+        public static string GetDisplayValue<TEnum>(TEnum value)
+        {
+            var fieldInfo = value.GetType().GetField(value.ToString());
+            var descriptionAttributes = fieldInfo.GetCustomAttributes(typeof(TEnum), false) as DisplayAttribute[];
+
+            if (descriptionAttributes == null) return string.Empty;
+            return (descriptionAttributes.Length > 0) ? descriptionAttributes[0].Name : value.ToString();
         }
     }
 }

@@ -6,7 +6,12 @@ using System.Threading.Tasks;
 
 namespace Roggle.Core
 {
-    public static class RoggleExtensions
+    [Flags]
+    public enum RoggleLogLevel
     {
+        Debug       = 1,
+        Info        = 2,
+        Warning     = 4,
+        Error       = 8
     }
 }

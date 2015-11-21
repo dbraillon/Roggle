@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Configuration;
 using System.Linq;
 using System.IO;
 
@@ -8,27 +7,29 @@ namespace Roggle.Core
     /// <summary>
     /// Roggle interface based on the Windows FileInfo class.
     /// </summary>
-    public class FileRoggle : IRoggle
+    public class FileRoggle : BaseRoggle
     {
         /// <summary>
         /// Max file length bytes. 10 Mo.
         /// </summary>
-        private const int MaxFileLength = 10485760;
+        public int MaxFileLength { get; set; }
 
         /// <summary>
-        /// Path used to created and write to the file log. Will be filled by application config with the key RoggleLogFilePath. Default is %localappdata%/Roggle/default.log.
+        /// Path used to created and write to the file log. Default is Program Data/Roggle/roggle.log.
         /// </summary>
         public string LogFilePath { get; set; }
         
         /// <summary>
         /// Create the file log. If the file does not exist, this method will create the file.
         /// </summary>
-        public void Create()
+        public FileRoggle(string logFilePath = null, int maxFileLength = 10485760, RoggleLogLevel acceptedLogLevels = RoggleLogLevel.Info | RoggleLogLevel.Warning | RoggleLogLevel.Error) 
+            : base(acceptedLogLevels)
         {
             try
             {
-                // Get path from app.config, set default value if null
-                LogFilePath = ConfigurationManager.AppSettings.Get("RoggleLogFilePath") ?? Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Roggle", "default.log");
+                // Set log file path, set defaults if necessary
+                LogFilePath = logFilePath ?? Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonPrograms), "Roggle", "roggle.log");
+                MaxFileLength = maxFileLength;
 
                 // Create path if not exists
                 Directory.CreateDirectory(Path.GetDirectoryName(LogFilePath));
@@ -43,40 +44,19 @@ namespace Roggle.Core
             }
         }
 
-        public void WriteDebug(string message)
-        {
-            // Write debug message
-            Write(string.Format("[D] > {0}", message));
-        }
-
-        public void WriteInformation(string message)
-        {
-            // Write information message
-            Write(string.Format("[I] > {0}", message));
-        }
-
-        public void WriteWarning(string message)
-        {
-            // Write warning message
-            Write(string.Format("[W] > {0}", message));
-        }
-
-        public void WriteError(string message)
-        {
-            // Write error message
-            Write(string.Format("[E] > {0}", message));
-        }
-
         /// <summary>
         /// Base event writing for file Roogle.
         /// </summary>
         /// <param name="message">The message to log.</param>
-        public void Write(string message)
+        public void WriteBase(string message, RoggleLogLevel level = RoggleLogLevel.Error)
         {
             try
             {
+                string format = "[{0} - {1}] {2}";
+                string formattedMessage = string.Format(format, DateTime.Now, RoggleHelper.GetDisplayValue(level), message);
+
                 // Try to write in file log
-                File.AppendAllLines(LogFilePath, new string[] { string.Format("{0} > {1}", DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss"), message) });
+                File.AppendAllLines(LogFilePath, new string[] { formattedMessage });
 
                 #region Check if file size is not max
 
@@ -106,6 +86,23 @@ namespace Roggle.Core
                 // Exception occurs, encapsulate it inside a Roggle exception and throw it
                 throw new RoggleException(string.Format("File Roggle cannot write inside the file at path {0}. Wanted to write {1}.", LogFilePath, message), e);
             }
+        }
+
+        public override void Write(string message, RoggleLogLevel level = RoggleLogLevel.Error)
+        {
+            WriteBase(message, level);
+        }
+
+        public override void Write(Exception e, RoggleLogLevel level = RoggleLogLevel.Error)
+        {
+            WriteBase(e.ToString(), level);
+        }
+
+        public override void Write(string message, Exception e, RoggleLogLevel level = RoggleLogLevel.Error)
+        {
+            string concatenatedMessage = string.Join(Environment.NewLine, message, e.ToString());
+
+            WriteBase(concatenatedMessage, level);
         }
     }
 }

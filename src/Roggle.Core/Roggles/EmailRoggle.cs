@@ -8,40 +8,40 @@ namespace Roggle.Core
     /// <summary>
     /// Roggle interface based on the System.Net.Mail class.
     /// </summary>
-    public class EmailRoggle : IRoggle
+    public class EmailRoggle : BaseRoggle
     {
         /// <summary>
-        /// Host used to connect on a Smtp server. Will be filled by application config with the key RoggleEmailHost.
+        /// Host used to connect on a Smtp server.
         /// </summary>
         public string Host { get; set; }
 
         /// <summary>
-        /// Port used to connect on a Smtp server. Will be filled by application config with the key RoggleEmailPort.
+        /// Port used to connect on a Smtp server.
         /// </summary>
         public int Port { get; set; }
 
         /// <summary>
-        /// Login used to connect on a Smtp server. Will be filled by application config with the key RoggleEmailLogin.
+        /// Login used to connect on a Smtp server.
         /// </summary>
         public string Login { get; set; }
 
         /// <summary>
-        /// Password used to connect on a Smtp server. Will be filled by application config with the key RoggleEmailPassword.
+        /// Password used to connect on a Smtp server.
         /// </summary>
         public string Password { get; set; }
 
         /// <summary>
-        /// From used to set the sender of the log email. Will be filled by application config with the key RoggleEmailFrom.
+        /// From used to set the sender of the log email.
         /// </summary>
         public string From { get; set; }
 
         /// <summary>
-        /// To used to set the recipient of the log email. Will be filled by application config with the key RoggleEmailTo.
+        /// To used to set the recipient of the log email.
         /// </summary>
         public string To { get; set; }
 
         /// <summary>
-        /// Subject used to set the subject of the log email. Will be filled by application config with the key RoggleEmailSubject.
+        /// Subject used to set the subject of the log email.
         /// </summary>
         public string Subject { get; set; }
 
@@ -53,60 +53,28 @@ namespace Roggle.Core
         /// <summary>
         /// Retrieve the data in app.config.
         /// </summary>
-        public void Create()
+        public EmailRoggle(string host, int port, string login, string password, string from, string to, string subject, bool useSsl = false, RoggleLogLevel acceptedLogLevels = RoggleLogLevel.Info | RoggleLogLevel.Warning | RoggleLogLevel.Error)
+            : base(acceptedLogLevels)
         {
-            try
-            {
-                // Get all necessary data from app.config, no default value
-                Host = ConfigurationManager.AppSettings.Get("RoggleEmailHost");
-                Port = int.Parse(ConfigurationManager.AppSettings.Get("RoggleEmailPort"));
-                Login = ConfigurationManager.AppSettings.Get("RoggleEmailLogin");
-                Password = ConfigurationManager.AppSettings.Get("RoggleEmailPassword");
-                From = ConfigurationManager.AppSettings.Get("RoggleEmailFrom");
-                To = ConfigurationManager.AppSettings.Get("RoggleEmailTo");
-                Subject = ConfigurationManager.AppSettings.Get("RoggleEmailSubject");
-                UseSsl = bool.Parse(ConfigurationManager.AppSettings.Get("RoggleEmailUseSsl") ?? "False");
-            }
-            catch (Exception e)
-            {
-                // Exception occurs, encapsulate it inside a Roggle exception and throw it
-                throw new RoggleException("Email Roggle cannot retrieve the data in app.config.", e);
-            }
-        }
-
-        public void WriteDebug(string message)
-        {
-            // Write debug message
-            Write(string.Format("Debug{0}{1}", Environment.NewLine, message));
-        }
-
-        public void WriteInformation(string message)
-        {
-            // Write information message
-            Write(string.Format("Information{0}{1}", Environment.NewLine, message));
-        }
-
-        public void WriteWarning(string message)
-        {
-            // Write warning message
-            Write(string.Format("Warning{0}{1}", Environment.NewLine, message));
-        }
-
-        public void WriteError(string message)
-        {
-            // Write error message
-            Write(string.Format("Error{0}{1}", Environment.NewLine, message));
+            Host = host;
+            Port = port;
+            Login = login;
+            Password = password;
+            From = from;
+            To = to;
+            Subject = subject;
+            UseSsl = useSsl;
         }
 
         /// <summary>
         /// Base event writing for application event Roggle.
         /// </summary>
         /// <param name="message">The message to log.</param>
-        public void Write(string message)
+        public virtual void WriteBase(string message, RoggleLogLevel level = RoggleLogLevel.Error)
         {
             try
             {
-                // Send an email with app.config data
+                // Send an email with given data
                 using (SmtpClient client = new SmtpClient())
                 {
                     MailMessage mail = new MailMessage(From, To);
@@ -125,6 +93,23 @@ namespace Roggle.Core
                 // Exception occurs, encapsulate it inside a Roggle exception and throw it
                 throw new RoggleException(string.Format("Email Roggle cannot send an email to {0}. Wanted to write {1}", To, message), e);
             }
+        }
+
+        public override void Write(string message, RoggleLogLevel level = RoggleLogLevel.Error)
+        {
+            WriteBase(message, level);
+        }
+
+        public override void Write(Exception e, RoggleLogLevel level = RoggleLogLevel.Error)
+        {
+            WriteBase(e.ToString(), level);
+        }
+
+        public override void Write(string message, Exception e, RoggleLogLevel level = RoggleLogLevel.Error)
+        {
+            string concatenatedMessage = string.Join(Environment.NewLine, message, e.ToString());
+
+            WriteBase(concatenatedMessage, level);
         }
     }
 }
