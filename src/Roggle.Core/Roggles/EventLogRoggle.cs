@@ -15,12 +15,12 @@ namespace Roggle.Core
         private const int MaxEventLogEntryLength = 30000;
 
         /// <summary>
-        /// Event source name used to created and write to the event log. Will be filled by application config with the key RoggleEventSourceName. Default is Roggle.
+        /// Event source name used to created and write to the event log. Default is Application.
         /// </summary>
         public string EventSourceName { get; set; }
 
         /// <summary>
-        /// Event log name used to create the event log. Will be filled by application config with the key RoggleEventLogName. Default is Application.
+        /// Event log name used to create the event log. Default is Application.
         /// </summary>
         public string EventLogName { get; set; }
 
@@ -32,7 +32,7 @@ namespace Roggle.Core
         {
             try
             {
-                // Get event source name and event log name from app.config, set default value if null
+                // Set event source and log name, set defaults if necessary
                 EventSourceName = eventSourceName ?? "Application";
                 EventLogName = eventLogName ?? "Application";
 

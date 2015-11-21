@@ -5,9 +5,8 @@ namespace Roggle.Core
 {
     public class GRoggle
     {
-        /// <summary>
-        /// Current Roggle, is null unless you called Roggle.Use<> in the first place.
-        /// </summary>
+        #region Singleton pattern
+
         private static GRoggle _instance;
 
         private static GRoggle Instance
@@ -23,27 +22,46 @@ namespace Roggle.Core
             }
         }
 
+        #endregion
+
         /// <summary>
-        /// Specify to the Roggle to use a given type of log system.
+        /// Specify to the Roggle to use a given type of log system. This can be called multiple times but at least once.
         /// </summary>
-        /// <typeparam name="TRoggle">An existing log system in Roggle.Core.</typeparam>
+        /// <param name="roggles">Existing log systems in Roggle.Core.</param>
+        public static void Use(params BaseRoggle[] roggles)
+        {
+            Use(true, roggles);
+        }
+
+        /// <summary>
+        /// Specify to the Roggle to use a given type of log system. This can be called multiple times but at least once.
+        /// </summary>
         /// <param name="logUnhandledException">Whether you want or not to log unhandled exception.</param>
-        public static void Use(BaseRoggle roggle, bool logUnhandledException = true)
+        /// <param name="roggles">Existing log systems in Roggle.Core.</param>
+        public static void Use(bool logUnhandledException, params BaseRoggle[] roggles)
         {
             // Check arguments
-            if (roggle == null) throw new ArgumentNullException("roggle");
+            if (roggles == null) throw new ArgumentNullException("roggle");
 
             // Create the Roggle
-            Instance.Roggles.Add(roggle);
+            Instance.Roggles.AddRange(roggles);
 
             // Check if the user wants to log unhandled exceptions
             if (logUnhandledException)
             {
-                // Add an event to retrieve unhandled exceptions
-                AppDomain.CurrentDomain.UnhandledException += roggle.UnhandledException;
+                foreach (BaseRoggle roggle in roggles)
+                {
+                    // Add an event to retrieve unhandled exceptions
+                    AppDomain.CurrentDomain.UnhandledException += roggle.UnhandledException;
+                }
             }
         }
 
+        /// <summary>
+        /// Write message in underlying log systems.
+        /// </summary>
+        /// <param name="message">The message to be log.</param>
+        /// <param name="level">The level of the message to be log.</param>
         public static void Write(string message, RoggleLogLevel level = RoggleLogLevel.Error)
         {
             foreach (BaseRoggle roggle in Instance.Roggles)
@@ -55,6 +73,11 @@ namespace Roggle.Core
             }
         }
 
+        /// <summary>
+        /// Write an exception in underlying log systems.
+        /// </summary>
+        /// <param name="exception">The exception to be log.</param>
+        /// <param name="level">The level of the exception to be log.</param>
         public static void Write(Exception exception, RoggleLogLevel level = RoggleLogLevel.Error)
         {
             foreach (BaseRoggle roggle in Instance.Roggles)
@@ -66,6 +89,12 @@ namespace Roggle.Core
             }
         }
 
+        /// <summary>
+        /// Write a message and an exception in underlying log systems.
+        /// </summary>
+        /// <param name="message">The message to be log.</param>
+        /// <param name="exception">The exception to be log.</param>
+        /// <param name="level">The level of the exception to be log.</param>
         public static void Write(string message, Exception exception, RoggleLogLevel level = RoggleLogLevel.Error)
         {
             foreach (BaseRoggle roggle in Instance.Roggles)
@@ -78,7 +107,7 @@ namespace Roggle.Core
         }
 
 
-        public IList<IRoggle> Roggles { get; set; }
+        public List<IRoggle> Roggles { get; set; }
 
         private GRoggle()
         {

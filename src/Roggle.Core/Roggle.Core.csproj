@@ -48,6 +48,7 @@
     <Compile Include="RoggleExtensions.cs" />
     <Compile Include="RoggleHelper.cs" />
     <Compile Include="RoggleLogLevel.cs" />
+    <Compile Include="Roggles\ConsoleRoggle.cs" />
     <Compile Include="Roggles\EmailRoggle.cs" />
     <Compile Include="Roggles\EventLogRoggle.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

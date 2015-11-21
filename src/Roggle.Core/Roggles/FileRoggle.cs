@@ -15,7 +15,7 @@ namespace Roggle.Core
         public int MaxFileLength { get; set; }
 
         /// <summary>
-        /// Path used to created and write to the file log. Will be filled by application config with the key RoggleLogFilePath. Default is %localappdata%/Roggle/default.log.
+        /// Path used to created and write to the file log. Default is Program Data/Roggle/roggle.log.
         /// </summary>
         public string LogFilePath { get; set; }
         
@@ -27,7 +27,7 @@ namespace Roggle.Core
         {
             try
             {
-                // Get path from app.config, set default value if null
+                // Set log file path, set defaults if necessary
                 LogFilePath = logFilePath ?? Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonPrograms), "Roggle", "roggle.log");
                 MaxFileLength = maxFileLength;
 
@@ -53,7 +53,7 @@ namespace Roggle.Core
             try
             {
                 string format = "[{0} - {1}] {2}";
-                string formattedMessage = string.Format(format, DateTime.Now, RoggleExtensions.GetDisplayValue(level), message);
+                string formattedMessage = string.Format(format, DateTime.Now, RoggleHelper.GetDisplayValue(level), message);
 
                 // Try to write in file log
                 File.AppendAllLines(LogFilePath, new string[] { formattedMessage });

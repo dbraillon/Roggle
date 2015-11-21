@@ -11,37 +11,37 @@ namespace Roggle.Core
     public class EmailRoggle : BaseRoggle
     {
         /// <summary>
-        /// Host used to connect on a Smtp server. Will be filled by application config with the key RoggleEmailHost.
+        /// Host used to connect on a Smtp server.
         /// </summary>
         public string Host { get; set; }
 
         /// <summary>
-        /// Port used to connect on a Smtp server. Will be filled by application config with the key RoggleEmailPort.
+        /// Port used to connect on a Smtp server.
         /// </summary>
         public int Port { get; set; }
 
         /// <summary>
-        /// Login used to connect on a Smtp server. Will be filled by application config with the key RoggleEmailLogin.
+        /// Login used to connect on a Smtp server.
         /// </summary>
         public string Login { get; set; }
 
         /// <summary>
-        /// Password used to connect on a Smtp server. Will be filled by application config with the key RoggleEmailPassword.
+        /// Password used to connect on a Smtp server.
         /// </summary>
         public string Password { get; set; }
 
         /// <summary>
-        /// From used to set the sender of the log email. Will be filled by application config with the key RoggleEmailFrom.
+        /// From used to set the sender of the log email.
         /// </summary>
         public string From { get; set; }
 
         /// <summary>
-        /// To used to set the recipient of the log email. Will be filled by application config with the key RoggleEmailTo.
+        /// To used to set the recipient of the log email.
         /// </summary>
         public string To { get; set; }
 
         /// <summary>
-        /// Subject used to set the subject of the log email. Will be filled by application config with the key RoggleEmailSubject.
+        /// Subject used to set the subject of the log email.
         /// </summary>
         public string Subject { get; set; }
 
@@ -74,7 +74,7 @@ namespace Roggle.Core
         {
             try
             {
-                // Send an email with app.config data
+                // Send an email with given data
                 using (SmtpClient client = new SmtpClient())
                 {
                     MailMessage mail = new MailMessage(From, To);
