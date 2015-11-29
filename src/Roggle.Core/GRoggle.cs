@@ -111,7 +111,7 @@ namespace Roggle.Core
 
         private GRoggle()
         {
-
+            Roggles = new List<IRoggle>();
         }
     }
 }
