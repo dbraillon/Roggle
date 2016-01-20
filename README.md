@@ -1,7 +1,7 @@
 Roggle
 ======
 
-[![Latest version](https://img.shields.io/nuget/v/Roggle.svg)](https://www.nuget.org/packages?q=roggle) [![Build Status](https://travis-ci.org/dbraillon/Roggle.svg?branch=master)](https://travis-ci.org/dbraillon/Roggle) [![MIT  License](https://img.shields.io/badge/license-MIT-blue.svg)](http://www.gnu.org/licenses/lgpl-3.0.html)
+[![Latest version](https://img.shields.io/nuget/v/Roggle.svg)](https://www.nuget.org/packages/Roggle/) [![Build Status](https://travis-ci.org/dbraillon/Roggle.svg?branch=master)](https://travis-ci.org/dbraillon/Roggle) [![MIT  License](https://img.shields.io/badge/license-MIT-blue.svg)](http://www.gnu.org/licenses/lgpl-3.0.html)
 
 Simple log system for .Net applications.
 
@@ -20,6 +20,11 @@ You can use Roggle in any project, but it must be first initialized. For example
 protected void Application_Start()
 {
     // Tell GRoggle which Roggle you want to use
+    GRoggle.Use(new ConsoleRoggle());
+    
+    // You can add mutliple Roggle, each time you write an entry
+    // it will be written in all roggle you put here
+    GRoggle.Use(new EventLogRoggle());
     GRoggle.Use(new FileRoggle());
 }
 ```
