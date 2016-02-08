@@ -32,7 +32,7 @@ protected void Application_Start()
 Usage
 -----
 
-[**FileRoggle**]()
+[**FileRoggle**](https://github.com/dbraillon/Roggle/wiki/FileRoggle)
 
 Write any message inside a log file. By default, it will create a log file inside Program Data/Roggle.
 
@@ -46,7 +46,7 @@ You can configure FileRoggle to create a log in a specified path:
 GRoggle.Use(new FileRoggle("C:/MyApp/MyApp.log"));
 ```
 
-[**EventLogRoggle**]()
+[**EventLogRoggle**](https://github.com/dbraillon/Roggle/wiki/EventLogRoggle)
 
 Write any message inside the a custom log in Windows Event Viewer. By default, it will try to create an event source called Roggle inside Application log.
 
