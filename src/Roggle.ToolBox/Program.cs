@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Roggle.Core;
+using Roggle.Web;
+using System;
 using System.Diagnostics;
 using System.Linq;
 
@@ -23,6 +25,14 @@ namespace Roggle.ToolBox
                             GetUserChoice(args, "Event log name: ", 2, false));
                         break;
 
+                    case "W":
+                        isUserChoiceValid = true;
+                        TestWebRoggle(
+                            GetUserChoice(args, "Url: ", 1, false),
+                            new Guid(GetUserChoice(args, "Key: ", 2, false)),
+                            GetUserChoice(args, "Source: ", 3, false));
+                        break;
+
                     default:
                         isUserChoiceValid = false;
                         break;
@@ -42,6 +52,7 @@ namespace Roggle.ToolBox
                 Console.WriteLine("Hello !");
                 Console.WriteLine("What you want to do ?");
                 Console.WriteLine("- (C)reate event source");
+                Console.WriteLine("- Test a (W)eb Roggle");
                 Console.Write("Your choice: ");
                 userChoice = Console.ReadLine();
             }
@@ -99,6 +110,29 @@ namespace Roggle.ToolBox
             {
                 Console.WriteLine("ERR");
                 Console.WriteLine("Failed to create event source.");
+            }
+        }
+
+        static void TestWebRoggle(string url, Guid key, string source)
+        {
+            Console.Clear();
+            Console.WriteLine("-------------");
+            Console.WriteLine("Test a Roggle");
+            Console.WriteLine("-------------");
+            Console.WriteLine();
+
+            try
+            {
+                GRoggle.Use(new WebRoggle(url, key, source));
+                GRoggle.Write("Test debug", RoggleLogLevel.Debug);
+                GRoggle.Write("Test error very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very", RoggleLogLevel.Error);
+                GRoggle.Write("Test info", RoggleLogLevel.Info);
+                GRoggle.Write("Test warning", RoggleLogLevel.Warning);
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("ERR");
+                Console.WriteLine("Failed to test Web Roggle.");
             }
         }
     }
