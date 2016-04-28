@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Roggle.ToolBox", "Roggle.To
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Roggle.Tests", "Roggle.Tests\Roggle.Tests.csproj", "{3F7FB237-3DA8-4009-9899-FD850B42C85E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Roggle.Web", "Roggle.Web\Roggle.Web.csproj", "{F3A35C41-CCCD-4E22-8E04-E1504989BE89}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Roggle.Overseer", "Roggle.Overseer\Roggle.Overseer.csproj", "{F3A35C41-CCCD-4E22-8E04-E1504989BE89}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

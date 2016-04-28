@@ -57,9 +57,9 @@
       <Project>{de43fcfe-19a2-4d0c-8f4a-3d3c28b152d7}</Project>
       <Name>Roggle.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Roggle.Web\Roggle.Web.csproj">
+    <ProjectReference Include="..\Roggle.Overseer\Roggle.Overseer.csproj">
       <Project>{f3a35c41-cccd-4e22-8e04-e1504989be89}</Project>
-      <Name>Roggle.Web</Name>
+      <Name>Roggle.Overseer</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
