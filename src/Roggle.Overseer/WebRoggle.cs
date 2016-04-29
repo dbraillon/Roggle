@@ -26,30 +26,37 @@ namespace Roggle.Web
 
         public void WriteBase(string message, RoggleLogLevel level)
         {
-            var newEvent = new OverseerEvent()
+            try
             {
-                Description = message,
-                Name = Source,
-                UserId = Key,
-                Level =
-                    level == RoggleLogLevel.Debug ? OverseerEventLevel.Debug :
-                    level == RoggleLogLevel.Error ? OverseerEventLevel.Error :
-                    level == RoggleLogLevel.Info ? OverseerEventLevel.Information :
-                    level == RoggleLogLevel.Warning ? OverseerEventLevel.Warning :
-                    OverseerEventLevel.Debug
-            };
-
-            using (var client = new HttpClient())
-            {
-                client.BaseAddress = new Uri(Url);
-                client.DefaultRequestHeaders.Accept.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-                var response = AsyncHelper.RunSync(() => client.PostAsJsonAsync("api/events", newEvent));
-                if (!response.IsSuccessStatusCode)
+                var newEvent = new OverseerEvent()
                 {
-                    // Do something !
+                    Description = message,
+                    Name = Source,
+                    UserId = Key,
+                    Level =
+                                    level == RoggleLogLevel.Debug ? OverseerEventLevel.Debug :
+                                    level == RoggleLogLevel.Error ? OverseerEventLevel.Error :
+                                    level == RoggleLogLevel.Info ? OverseerEventLevel.Information :
+                                    level == RoggleLogLevel.Warning ? OverseerEventLevel.Warning :
+                                    OverseerEventLevel.Debug
+                };
+
+                using (var client = new HttpClient())
+                {
+                    client.BaseAddress = new Uri(Url);
+                    client.DefaultRequestHeaders.Accept.Clear();
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                    var response = AsyncHelper.RunSync(() => client.PostAsJsonAsync("api/events", newEvent));
+                    if (!response.IsSuccessStatusCode)
+                    {
+                        // Do something !
+                    }
                 }
+            }
+            catch (Exception e)
+            {
+                // Do something !
             }
         }
 
