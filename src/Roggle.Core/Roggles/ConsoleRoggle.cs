@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Roggle.Core.Roggles
+namespace Roggle.Core
 {
     /// <summary>
     /// Roggle interface based on Windows Console class.
