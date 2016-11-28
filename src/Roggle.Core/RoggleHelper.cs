@@ -48,5 +48,10 @@ namespace Roggle.Core
             if (descriptionAttributes == null) return string.Empty;
             return (descriptionAttributes.Length > 0) ? descriptionAttributes[0].Name : value.ToString();
         }
+
+        public static IReadOnlyList<T> GetEnumValues<T>()
+        {
+            return (T[])Enum.GetValues(typeof(T));
+        }
     }
 }

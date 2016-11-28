@@ -52,7 +52,7 @@
     <Compile Include="AsyncHelper.cs" />
     <Compile Include="OverseerEvent.cs" />
     <Compile Include="OverseerEventLevel.cs" />
-    <Compile Include="WebRoggle.cs" />
+    <Compile Include="OverseerRoggle.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

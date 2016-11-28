@@ -1,17 +1,24 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 
 namespace Roggle.Core
 {
     [Flags]
     public enum RoggleLogLevel
     {
-        Debug       = 1,
-        Info        = 2,
-        Warning     = 4,
-        Error       = 8
+        [Display(Name = "D")]
+        Debug    = 1,
+
+        [Display(Name = "I")]
+        Info     = 2,
+
+        [Display(Name = "W")]
+        Warning  = 4,
+
+        [Display(Name = "E")]
+        Error    = 8,
+
+        [Display(Name = "C")]
+        Critical = 16
     }
 }

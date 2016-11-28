@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Roggle.Web
+namespace Roggle.Core
 {
     public static class AsyncHelper
     {

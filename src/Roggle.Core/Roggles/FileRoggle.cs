@@ -22,7 +22,8 @@ namespace Roggle.Core
         /// <summary>
         /// Create the file log. If the file does not exist, this method will create the file.
         /// </summary>
-        public FileRoggle(string logFilePath = null, int maxFileLength = 10485760, RoggleLogLevel acceptedLogLevels = RoggleLogLevel.Info | RoggleLogLevel.Warning | RoggleLogLevel.Error) 
+        public FileRoggle(string logFilePath = null, int maxFileLength = 10485760, 
+            RoggleLogLevel acceptedLogLevels = RoggleLogLevel.Info | RoggleLogLevel.Warning | RoggleLogLevel.Error | RoggleLogLevel.Critical) 
             : base(acceptedLogLevels)
         {
             try
@@ -35,74 +36,45 @@ namespace Roggle.Core
                 Directory.CreateDirectory(Path.GetDirectoryName(LogFilePath));
 
                 // Write a test entry and create the file if necessary
-                File.AppendAllLines(LogFilePath, new string[] { "Log file successfuly created !" });
-            }
-            catch (Exception e)
-            {
-                // Exception occurs, encapsulate it inside a Roggle exception and throw it
-                throw new RoggleException(string.Format("File Roggle cannot create the file at path {0}.", LogFilePath), e);
-            }
-        }
-
-        /// <summary>
-        /// Base event writing for file Roogle.
-        /// </summary>
-        /// <param name="message">The message to log.</param>
-        public void WriteBase(string message, RoggleLogLevel level = RoggleLogLevel.Error)
-        {
-            try
-            {
-                string format = "[{0} - {1}] {2}";
-                string formattedMessage = string.Format(format, DateTime.Now, RoggleHelper.GetDisplayValue(level), message);
-
-                // Try to write in file log
-                File.AppendAllLines(LogFilePath, new string[] { formattedMessage });
-
-                #region Check if file size is not max
-
-                bool isLessThanMax = false;
-                FileInfo logFile = new FileInfo(LogFilePath);
-
-                while (!isLessThanMax)
+                if (!File.Exists(LogFilePath))
                 {
-                    if (logFile.Length >= MaxFileLength)
-                    {
-                        // Get all lines
-                        string[] contentLines = File.ReadAllLines(LogFilePath);
-
-                        // Skip first line
-                        File.WriteAllLines(LogFilePath, contentLines.Skip(1).ToArray());
-                    }
-                    else
-                    {
-                        isLessThanMax = true;
-                    }
+                    File.AppendAllLines(LogFilePath, new string[] { "Log file successfuly created !" });
                 }
-
-                #endregion
             }
             catch (Exception e)
             {
                 // Exception occurs, encapsulate it inside a Roggle exception and throw it
-                throw new RoggleException(string.Format("File Roggle cannot write inside the file at path {0}. Wanted to write {1}.", LogFilePath, message), e);
+                throw new RoggleException($"File Roggle cannot create the file at path {LogFilePath}, check inner exception.", e);
             }
         }
-
+        
         public override void Write(string message, RoggleLogLevel level = RoggleLogLevel.Error)
         {
-            WriteBase(message, level);
-        }
+            // Try to write in file log
+            File.AppendAllLines(LogFilePath, new string[] { message });
 
-        public override void Write(Exception e, RoggleLogLevel level = RoggleLogLevel.Error)
-        {
-            WriteBase(e.ToString(), level);
-        }
+            #region Check if file size is not max
 
-        public override void Write(string message, Exception e, RoggleLogLevel level = RoggleLogLevel.Error)
-        {
-            string concatenatedMessage = string.Join(Environment.NewLine, message, e.ToString());
+            bool isLessThanMax = false;
+            FileInfo logFile = new FileInfo(LogFilePath);
 
-            WriteBase(concatenatedMessage, level);
+            while (!isLessThanMax)
+            {
+                if (logFile.Length >= MaxFileLength)
+                {
+                    // Get all lines
+                    string[] contentLines = File.ReadAllLines(LogFilePath);
+
+                    // Skip first line
+                    File.WriteAllLines(LogFilePath, contentLines.Skip(1).ToArray());
+                }
+                else
+                {
+                    isLessThanMax = true;
+                }
+            }
+
+            #endregion
         }
     }
 }

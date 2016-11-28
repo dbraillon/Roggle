@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace Roggle.Core
 {
+    /// <summary>
+    /// G for Global, GlobalRoggle allow you to write log from everywhere as long as you have first initialized it.
+    /// </summary>
     public class GRoggle
     {
         #region Singleton pattern
@@ -41,12 +44,12 @@ namespace Roggle.Core
         public static void Use(bool logUnhandledException, params BaseRoggle[] roggles)
         {
             // Check arguments
-            if (roggles == null) throw new ArgumentNullException("roggle");
+            if (roggles == null) throw new ArgumentNullException(nameof(roggles));
 
             // Create the Roggle
             Instance.Roggles.AddRange(roggles);
 
-            // Check if the user wants to log unhandled exceptions
+            // Check if user wants to log unhandled exceptions
             if (logUnhandledException)
             {
                 foreach (BaseRoggle roggle in roggles)
@@ -80,13 +83,7 @@ namespace Roggle.Core
         /// <param name="level">The level of the exception to be log.</param>
         public static void Write(Exception exception, RoggleLogLevel level = RoggleLogLevel.Error)
         {
-            foreach (BaseRoggle roggle in Instance.Roggles)
-            {
-                if (roggle.AcceptedLogLevels.HasFlag(level))
-                {
-                    roggle.Write(exception, level);
-                }
-            }
+            Write(exception.ToString(), level: level);
         }
 
         /// <summary>
@@ -97,21 +94,15 @@ namespace Roggle.Core
         /// <param name="level">The level of the exception to be log.</param>
         public static void Write(string message, Exception exception, RoggleLogLevel level = RoggleLogLevel.Error)
         {
-            foreach (BaseRoggle roggle in Instance.Roggles)
-            {
-                if (roggle.AcceptedLogLevels.HasFlag(level))
-                {
-                    roggle.Write(message, exception, level);
-                }
-            }
+            Write(string.Join(Environment.NewLine, message, exception.ToString()), level: level);
         }
 
 
-        public List<IRoggle> Roggles { get; set; }
+        public List<BaseRoggle> Roggles { get; set; }
 
         private GRoggle()
         {
-            Roggles = new List<IRoggle>();
+            Roggles = new List<BaseRoggle>();
         }
     }
 }
