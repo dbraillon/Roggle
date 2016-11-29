@@ -1,3 +1,7 @@
+2.1.0
+	- Another log manager is here: DRoggle, it will keep logs in memory and flush it as it disposes
+	- Code cleaning
+
 2.0.0
 	- Now, you need to give to GRoggle.Use an instance of a Roggle
 	- It is possible to Use more then one Roggle at a time
