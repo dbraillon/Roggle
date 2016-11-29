@@ -1,5 +1,4 @@
 ﻿using Roggle.Core;
-using Roggle.Web;
 using System;
 using System.Diagnostics;
 using System.Linq;
@@ -123,7 +122,7 @@ namespace Roggle.ToolBox
 
             try
             {
-                GRoggle.Use(new WebRoggle(url, key, source));
+                GRoggle.Use(new OverseerRoggle(url, key, source));
                 GRoggle.Write("Test debug", RoggleLogLevel.Debug);
                 GRoggle.Write("Test error very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very", RoggleLogLevel.Error);
                 GRoggle.Write("Test info", RoggleLogLevel.Info);
