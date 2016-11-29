@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+    <metadata>
+        <id>Roggle.Overseer</id>
+        <version>2.1.0</version>
+        <title>Roggle.Overseer</title>
+        <authors>Davy Braillon</authors>
+        <licenseUrl>https://github.com/dbraillon/Roggle/raw/master/LICENSE</licenseUrl>
+        <projectUrl>https://github.com/dbraillon/Roggle</projectUrl>
+        <requireLicenseAcceptance>true</requireLicenseAcceptance>
+        <description>Roggle.Overseer is an extension to Roggle, it allows to send logs to the Overseer web application.</description>
+        <releaseNotes />
+        <dependencies>
+            <group />
+            <group targetFramework=".NETFramework4.5.0">
+                <dependency id="Microsoft.AspNet.WebApi.Client" version="5.2.3" />
+                <dependency id="Roggle" version="2.1.0" />
+            </group>
+        </dependencies>
+    </metadata>
+</package>
