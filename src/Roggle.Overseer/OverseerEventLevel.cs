@@ -1,5 +1,5 @@
 ﻿
-namespace Roggle.Web
+namespace Roggle.Core
 {
     public enum OverseerEventLevel
     {

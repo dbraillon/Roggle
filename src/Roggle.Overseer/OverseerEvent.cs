@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Roggle.Web
+namespace Roggle.Core
 {
     public class OverseerEvent
     {

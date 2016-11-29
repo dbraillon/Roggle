@@ -1,6 +1,4 @@
-﻿using System;
-using System.Configuration;
-using System.Net;
+﻿using System.Net;
 using System.Net.Mail;
 
 namespace Roggle.Core
@@ -53,7 +51,9 @@ namespace Roggle.Core
         /// <summary>
         /// Retrieve the data in app.config.
         /// </summary>
-        public EmailRoggle(string host, int port, string login, string password, string from, string to, string subject, bool useSsl = false, RoggleLogLevel acceptedLogLevels = RoggleLogLevel.Info | RoggleLogLevel.Warning | RoggleLogLevel.Error)
+        public EmailRoggle(string host, int port, string login, string password, 
+            string from, string to, string subject, bool useSsl = false, 
+            RoggleLogLevel acceptedLogLevels = RoggleLogLevel.Info | RoggleLogLevel.Warning | RoggleLogLevel.Error | RoggleLogLevel.Critical)
             : base(acceptedLogLevels)
         {
             Host = host;
@@ -66,50 +66,21 @@ namespace Roggle.Core
             UseSsl = useSsl;
         }
 
-        /// <summary>
-        /// Base event writing for application event Roggle.
-        /// </summary>
-        /// <param name="message">The message to log.</param>
-        public virtual void WriteBase(string message, RoggleLogLevel level = RoggleLogLevel.Error)
+        public override void Write(string message, RoggleLogLevel level)
         {
-            try
+            // Send an email with given data
+            using (SmtpClient client = new SmtpClient())
             {
-                // Send an email with given data
-                using (SmtpClient client = new SmtpClient())
-                {
-                    MailMessage mail = new MailMessage(From, To);
-                    mail.Subject = Subject;
-                    mail.Body = message;
+                MailMessage mail = new MailMessage(From, To);
+                mail.Subject = Subject;
+                mail.Body = message;
 
-                    client.Host = Host;
-                    client.Port = Port;
-                    client.EnableSsl = UseSsl;
-                    client.Credentials = new NetworkCredential(Login, Password);
-                    client.Send(mail);
-                }
+                client.Host = Host;
+                client.Port = Port;
+                client.EnableSsl = UseSsl;
+                client.Credentials = new NetworkCredential(Login, Password);
+                client.Send(mail);
             }
-            catch (Exception e)
-            {
-                // Exception occurs, encapsulate it inside a Roggle exception and throw it
-                throw new RoggleException(string.Format("Email Roggle cannot send an email to {0}. Wanted to write {1}", To, message), e);
-            }
-        }
-
-        public override void Write(string message, RoggleLogLevel level = RoggleLogLevel.Error)
-        {
-            WriteBase(message, level);
-        }
-
-        public override void Write(Exception e, RoggleLogLevel level = RoggleLogLevel.Error)
-        {
-            WriteBase(e.ToString(), level);
-        }
-
-        public override void Write(string message, Exception e, RoggleLogLevel level = RoggleLogLevel.Error)
-        {
-            string concatenatedMessage = string.Join(Environment.NewLine, message, e.ToString());
-
-            WriteBase(concatenatedMessage, level);
         }
     }
 }
