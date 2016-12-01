@@ -19,17 +19,17 @@ namespace Roggle.Core
             Logs = RoggleHelper.GetEnumValues<RoggleLogLevel>().ToDictionary(x => x, x => new StringBuilder());
         }
 
-        public DRoggle(BaseRoggle roggle) : base()
+        public DRoggle(BaseRoggle roggle) : this()
         {
             Configuration.Roggles.Add(roggle);
         }
 
-        public DRoggle(DRoggleConfiguration conf) : base()
+        public DRoggle(DRoggleConfiguration conf) : this()
         {
             Configuration = conf;
         }
 
-        public DRoggle(Action<DRoggleConfiguration> conf) : base()
+        public DRoggle(Action<DRoggleConfiguration> conf) : this()
         {
             conf(Configuration);
         }
