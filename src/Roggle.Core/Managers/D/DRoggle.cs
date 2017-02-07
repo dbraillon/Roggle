@@ -6,7 +6,7 @@ using System.Text;
 namespace Roggle.Core
 {
     /// <summary>
-    /// D for Disposable, DisposableRoggle allow you to write log in memory and flush it when it disposes or whenever you want to.
+    /// D for Disposable, DisposableRoggle allows you to write log in memory and flush it when it disposes or whenever you want to.
     /// </summary>
     public class DRoggle : IDisposable
     {
