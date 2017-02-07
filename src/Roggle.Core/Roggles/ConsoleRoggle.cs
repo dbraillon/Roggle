@@ -13,6 +13,6 @@ namespace Roggle.Core
         }
 
         public override void Write(string message, RoggleLogLevel level)
-            => Console.WriteLine(message);
+            => Console.WriteLine($"{level.GetDisplayValue()}> {message}");
     }
 }

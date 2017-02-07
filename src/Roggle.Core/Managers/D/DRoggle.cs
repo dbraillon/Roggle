@@ -6,7 +6,7 @@ using System.Text;
 namespace Roggle.Core
 {
     /// <summary>
-    /// D for Disposable, DisposableRoggle allow you to write log in memory and flush it when it disposes or whenever you want to.
+    /// D for Disposable, DisposableRoggle allows you to write log in memory and flush it when it disposes or whenever you want to.
     /// </summary>
     public class DRoggle : IDisposable
     {
@@ -19,17 +19,17 @@ namespace Roggle.Core
             Logs = RoggleHelper.GetEnumValues<RoggleLogLevel>().ToDictionary(x => x, x => new StringBuilder());
         }
 
-        public DRoggle(BaseRoggle roggle) : base()
+        public DRoggle(BaseRoggle roggle) : this()
         {
             Configuration.Roggles.Add(roggle);
         }
 
-        public DRoggle(DRoggleConfiguration conf) : base()
+        public DRoggle(DRoggleConfiguration conf) : this()
         {
             Configuration = conf;
         }
 
-        public DRoggle(Action<DRoggleConfiguration> conf) : base()
+        public DRoggle(Action<DRoggleConfiguration> conf) : this()
         {
             conf(Configuration);
         }

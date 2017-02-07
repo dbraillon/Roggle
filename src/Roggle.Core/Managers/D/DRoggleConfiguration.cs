@@ -16,9 +16,9 @@ namespace Roggle.Core
         }
 
         public void Use<TRoggle>() 
-            where TRoggle : BaseRoggle
+            where TRoggle : BaseRoggle, new()
         {
-            Roggles.Add(Activator.CreateInstance<BaseRoggle>());
+            Roggles.Add(Activator.CreateInstance<TRoggle>());
         }
 
         public void Use(BaseRoggle roggle)
