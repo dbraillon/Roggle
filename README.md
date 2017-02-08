@@ -1,7 +1,7 @@
 Roggle
 ======
 
-[![Latest version](https://img.shields.io/nuget/v/Roggle.svg)](https://www.nuget.org/packages/Roggle/) [![Build status](https://ci.appveyor.com/api/projects/status/v7k1ujovx59lpe8d?svg=true)](https://ci.appveyor.com/project/dbraillon/roggle) [![License: LGPL v3](https://img.shields.io/badge/License-LGPL%20v3-blue.svg)](http://www.gnu.org/licenses/lgpl-3.0)
+[![Latest version](https://img.shields.io/nuget/v/Roggle.svg)](https://www.nuget.org/packages/Roggle/) [![Build status](https://ci.appveyor.com/api/projects/status/v7k1ujovx59lpe8d?svg=true)](https://ci.appveyor.com/project/dbraillon/roggle) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 Simple log system for .Net applications.
 
