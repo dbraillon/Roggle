@@ -32,7 +32,7 @@ namespace Roggle.Core
             Exception e = (Exception)args.ExceptionObject;
 
             // Write unhandled error in Roggles
-            Write(string.Join(Environment.NewLine, "Unhandled exception thrown.", e), RoggleLogLevel.Error);
+            Write("Unhandled exception thrown.", e, RoggleLogLevel.Error);
         }
     }
 }

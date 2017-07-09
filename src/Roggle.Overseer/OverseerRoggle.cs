@@ -5,6 +5,7 @@ using System.Net.Http.Headers;
 
 namespace Roggle.Core
 {
+    [Obsolete("Overseer will be shutdown very soon", true)]
     public class OverseerRoggle : BaseRoggle
     {
         protected string Url { get; set; }

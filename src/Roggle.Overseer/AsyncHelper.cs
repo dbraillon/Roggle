@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 
 namespace Roggle.Core
 {
+    [Obsolete("Overseer will be shutdown very soon", true)]
     public static class AsyncHelper
     {
         /// <summary>
@@ -70,6 +71,7 @@ namespace Roggle.Core
             return ret;
         }
 
+        [Obsolete("Overseer will be shutdown very soon", true)]
         private class ExclusiveSynchronizationContext : SynchronizationContext
         {
             private bool done;

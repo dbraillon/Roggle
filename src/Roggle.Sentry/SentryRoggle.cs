@@ -1,22 +1,43 @@
-﻿using SharpRaven;
+﻿using System;
+using SharpRaven;
 using SharpRaven.Data;
 
 namespace Roggle.Core
 {
-    public class SentryRoggle : BaseRoggle
+    public class SentryRoggle : IRoggle
     {
         protected RavenClient RavenClient { get; }
+        public RoggleLogLevel AcceptedLogLevels { get; set; }
 
         public SentryRoggle(string dsn,
-            RoggleLogLevel acceptedLogLevels = RoggleLogLevel.Error | RoggleLogLevel.Info | RoggleLogLevel.Warning | RoggleLogLevel.Critical) 
-            : base(acceptedLogLevels)
+            RoggleLogLevel acceptedLogLevels = RoggleLogLevel.Error | RoggleLogLevel.Info | RoggleLogLevel.Warning | RoggleLogLevel.Critical)
         {
+            AcceptedLogLevels = acceptedLogLevels;
             RavenClient = new RavenClient(dsn);
         }
 
-        public override void Write(string message, RoggleLogLevel level)
+        public void Write(string message, RoggleLogLevel level)
         {
             RavenClient.Capture(new SentryEvent(message) { Level = ToSentryErrorLevel(level) });
+        }
+
+        public void Write(Exception e, RoggleLogLevel level)
+        {
+            RavenClient.Capture(new SentryEvent(e) { Level = ToSentryErrorLevel(level) });
+        }
+
+        public void Write(string message, Exception e, RoggleLogLevel level)
+        {
+            RavenClient.Capture(new SentryEvent(e) { Level = ToSentryErrorLevel(level), Message = message });
+        }
+
+        public void UnhandledException(object sender, UnhandledExceptionEventArgs args)
+        {
+            // Cast object to Exception
+            Exception e = (Exception)args.ExceptionObject;
+
+            // Write unhandled error in Roggles
+            Write("Unhandled exception thrown.", e, RoggleLogLevel.Error);
         }
 
         public ErrorLevel ToSentryErrorLevel(RoggleLogLevel level)

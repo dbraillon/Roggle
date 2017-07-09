@@ -2,6 +2,7 @@
 
 namespace Roggle.Core
 {
+    [Obsolete("Overseer will be shutdown very soon", true)]
     public class OverseerEvent
     {
         public Guid UserId { get; set; }

@@ -24,14 +24,6 @@ namespace Roggle.ToolBox
                             GetUserChoice(args, "Event log name: ", 2, false));
                         break;
 
-                    case "W":
-                        isUserChoiceValid = true;
-                        TestWebRoggle(
-                            GetUserChoice(args, "Url: ", 1, false),
-                            new Guid(GetUserChoice(args, "Key: ", 2, false)),
-                            GetUserChoice(args, "Source: ", 3, false));
-                        break;
-
                     case "S":
                         isUserChoiceValid = true;
                         TestSentryRoggle(GetUserChoice(args, "Dsn: ", 1, false));
@@ -116,30 +108,7 @@ namespace Roggle.ToolBox
                 Console.WriteLine("Failed to create event source.");
             }
         }
-
-        static void TestWebRoggle(string url, Guid key, string source)
-        {
-            Console.Clear();
-            Console.WriteLine("-------------");
-            Console.WriteLine("Test a Roggle");
-            Console.WriteLine("-------------");
-            Console.WriteLine();
-
-            try
-            {
-                GRoggle.Use(new OverseerRoggle(url, key, source));
-                GRoggle.Write("Test debug", RoggleLogLevel.Debug);
-                GRoggle.Write("Test error very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very", RoggleLogLevel.Error);
-                GRoggle.Write("Test info", RoggleLogLevel.Info);
-                GRoggle.Write("Test warning", RoggleLogLevel.Warning);
-            }
-            catch (Exception)
-            {
-                Console.WriteLine("ERR");
-                Console.WriteLine("Failed to test Web Roggle.");
-            }
-        }
-
+        
         static void TestSentryRoggle(string dsn)
         {
             Console.Clear();
