@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+    <metadata>
+        <id>Roggle.Sentry</id>
+		<version>$version$</version>
+        <title>Roggle.Sentry</title>
+        <authors>Davy Braillon</authors>
+        <licenseUrl>https://github.com/dbraillon/Roggle/raw/master/LICENSE</licenseUrl>
+        <projectUrl>https://github.com/dbraillon/Roggle</projectUrl>
+        <requireLicenseAcceptance>true</requireLicenseAcceptance>
+        <description>Roggle.Sentry is an extension to Roggle, it allows to send logs to Sentry.</description>
+        <releaseNotes />
+        <dependencies>
+            <group />
+            <group targetFramework=".NETFramework4.5.0">
+                <dependency id="SharpRaven" version="2.2.0.0" />
+                <dependency id="Roggle" version="2.2.22" />
+            </group>
+        </dependencies>
+    </metadata>
+</package>
