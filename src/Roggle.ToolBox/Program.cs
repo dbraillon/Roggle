@@ -32,6 +32,11 @@ namespace Roggle.ToolBox
                             GetUserChoice(args, "Source: ", 3, false));
                         break;
 
+                    case "S":
+                        isUserChoiceValid = true;
+                        TestSentryRoggle(GetUserChoice(args, "Dsn: ", 1, false));
+                        break;
+
                     default:
                         isUserChoiceValid = false;
                         break;
@@ -132,6 +137,29 @@ namespace Roggle.ToolBox
             {
                 Console.WriteLine("ERR");
                 Console.WriteLine("Failed to test Web Roggle.");
+            }
+        }
+
+        static void TestSentryRoggle(string dsn)
+        {
+            Console.Clear();
+            Console.WriteLine("-------------");
+            Console.WriteLine("Test a Roggle");
+            Console.WriteLine("-------------");
+            Console.WriteLine();
+
+            try
+            {
+                GRoggle.Use(new SentryRoggle(dsn));
+                GRoggle.Write("Test debug", RoggleLogLevel.Debug);
+                GRoggle.Write("Test error very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very", RoggleLogLevel.Error);
+                GRoggle.Write("Test info", RoggleLogLevel.Info);
+                GRoggle.Write("Test warning", RoggleLogLevel.Warning);
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("ERR");
+                Console.WriteLine("Failed to test Sentry Roggle.");
             }
         }
     }
