@@ -59,6 +59,33 @@ namespace Roggle.Core
                 }
             }
         }
+        
+        /// <summary>
+        /// Add custom data that will be passed with every Exception GRoggle writes.
+        /// </summary>
+        public static void AddConstantExceptionData(object key, object value)
+        {
+            if (Instance.ConstantExceptionData.ContainsKey(key))
+            {
+                Instance.ConstantExceptionData[key] = value;
+            }
+            else
+            {
+                Instance.ConstantExceptionData.Add(key, value);
+            }
+        }
+
+
+        /// <summary>
+        /// Add custom data that will be passed with every Exception GRoggle writes.
+        /// </summary>
+        public static void AddConstantExceptionData(IDictionary<object, object> data)
+        {
+            foreach (var item in data)
+            {
+                AddConstantExceptionData(item.Key, item.Value);
+            }
+        }
 
         /// <summary>
         /// Write message in underlying log systems.
@@ -83,6 +110,18 @@ namespace Roggle.Core
         /// <param name="level">The level of the exception to be log.</param>
         public static void Write(Exception exception, RoggleLogLevel level = RoggleLogLevel.Error)
         {
+            foreach (var item in Instance.ConstantExceptionData)
+            {
+                if (exception.Data.Contains(item.Key))
+                {
+                    exception.Data[item.Key] = item.Value;
+                }
+                else
+                {
+                    exception.Data.Add(item.Key, item.Value);
+                }
+            }
+
             foreach (var roggle in Instance.Roggles)
             {
                 if (roggle.AcceptedLogLevels.HasFlag(level))
@@ -100,6 +139,18 @@ namespace Roggle.Core
         /// <param name="level">The level of the exception to be log.</param>
         public static void Write(string message, Exception exception, RoggleLogLevel level = RoggleLogLevel.Error)
         {
+            foreach (var item in Instance.ConstantExceptionData)
+            {
+                if (exception.Data.Contains(item.Key))
+                {
+                    exception.Data[item.Key] = item.Value;
+                }
+                else
+                {
+                    exception.Data.Add(item.Key, item.Value);
+                }
+            }
+
             foreach (var roggle in Instance.Roggles)
             {
                 if (roggle.AcceptedLogLevels.HasFlag(level))
@@ -110,10 +161,12 @@ namespace Roggle.Core
         }
 
 
+        public Dictionary<object, object> ConstantExceptionData { get; set; }
         public List<IRoggle> Roggles { get; set; }
 
         private GRoggle()
         {
+            ConstantExceptionData = new Dictionary<object, object>();
             Roggles = new List<IRoggle>();
         }
     }
