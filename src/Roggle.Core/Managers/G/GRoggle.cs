@@ -31,7 +31,7 @@ namespace Roggle.Core
         /// Specify to the Roggle to use a given type of log system. This can be called multiple times but at least once.
         /// </summary>
         /// <param name="roggles">Existing log systems in Roggle.Core.</param>
-        public static void Use(params BaseRoggle[] roggles)
+        public static void Use(params IRoggle[] roggles)
         {
             Use(true, roggles);
         }
@@ -41,7 +41,7 @@ namespace Roggle.Core
         /// </summary>
         /// <param name="logUnhandledException">Whether you want or not to log unhandled exception.</param>
         /// <param name="roggles">Existing log systems in Roggle.Core.</param>
-        public static void Use(bool logUnhandledException, params BaseRoggle[] roggles)
+        public static void Use(bool logUnhandledException, params IRoggle[] roggles)
         {
             // Check arguments
             if (roggles == null) throw new ArgumentNullException(nameof(roggles));
@@ -67,7 +67,7 @@ namespace Roggle.Core
         /// <param name="level">The level of the message to be log.</param>
         public static void Write(string message, RoggleLogLevel level = RoggleLogLevel.Error)
         {
-            foreach (BaseRoggle roggle in Instance.Roggles)
+            foreach (var roggle in Instance.Roggles)
             {
                 if (roggle.AcceptedLogLevels.HasFlag(level))
                 {
@@ -83,7 +83,13 @@ namespace Roggle.Core
         /// <param name="level">The level of the exception to be log.</param>
         public static void Write(Exception exception, RoggleLogLevel level = RoggleLogLevel.Error)
         {
-            Write(exception.ToString(), level: level);
+            foreach (var roggle in Instance.Roggles)
+            {
+                if (roggle.AcceptedLogLevels.HasFlag(level))
+                {
+                    roggle.Write(exception, level);
+                }
+            }
         }
 
         /// <summary>
@@ -94,15 +100,21 @@ namespace Roggle.Core
         /// <param name="level">The level of the exception to be log.</param>
         public static void Write(string message, Exception exception, RoggleLogLevel level = RoggleLogLevel.Error)
         {
-            Write(string.Join(Environment.NewLine, message, exception.ToString()), level: level);
+            foreach (var roggle in Instance.Roggles)
+            {
+                if (roggle.AcceptedLogLevels.HasFlag(level))
+                {
+                    roggle.Write(message, exception, level);
+                }
+            }
         }
 
 
-        public List<BaseRoggle> Roggles { get; set; }
+        public List<IRoggle> Roggles { get; set; }
 
         private GRoggle()
         {
-            Roggles = new List<BaseRoggle>();
+            Roggles = new List<IRoggle>();
         }
     }
 }

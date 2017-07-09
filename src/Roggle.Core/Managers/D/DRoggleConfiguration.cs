@@ -8,20 +8,20 @@ namespace Roggle.Core
     /// </summary>
     public class DRoggleConfiguration
     {
-        internal List<BaseRoggle> Roggles { get; set; }
+        internal List<IRoggle> Roggles { get; set; }
 
         public DRoggleConfiguration()
         {
-            Roggles = new List<BaseRoggle>();
+            Roggles = new List<IRoggle>();
         }
 
         public void Use<TRoggle>() 
-            where TRoggle : BaseRoggle, new()
+            where TRoggle : IRoggle, new()
         {
             Roggles.Add(Activator.CreateInstance<TRoggle>());
         }
 
-        public void Use(BaseRoggle roggle)
+        public void Use(IRoggle roggle)
         {
             Roggles.Add(roggle);
         }
