@@ -52,7 +52,7 @@ namespace Roggle.Core
             // Check if user wants to log unhandled exceptions
             if (logUnhandledException)
             {
-                foreach (BaseRoggle roggle in roggles)
+                foreach (var roggle in roggles)
                 {
                     // Add an event to retrieve unhandled exceptions
                     AppDomain.CurrentDomain.UnhandledException += roggle.UnhandledException;
