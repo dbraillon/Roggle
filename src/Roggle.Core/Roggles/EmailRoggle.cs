@@ -71,9 +71,11 @@ namespace Roggle.Core
             // Send an email with given data
             using (SmtpClient client = new SmtpClient())
             {
-                MailMessage mail = new MailMessage(From, To);
-                mail.Subject = Subject;
-                mail.Body = message;
+                var mail = new MailMessage(From, To)
+                {
+                    Subject = Subject,
+                    Body = message
+                };
 
                 client.Host = Host;
                 client.Port = Port;

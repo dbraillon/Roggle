@@ -10,12 +10,12 @@ namespace Roggle.Core
     public class FileRoggle : BaseRoggle
     {
         /// <summary>
-        /// Max file length bytes. 10 Mo.
+        /// Max file length in bytes. Default 10 Mo.
         /// </summary>
         public int MaxFileLength { get; set; }
 
         /// <summary>
-        /// Path used to created and write to the file log. Default is Program Data/Roggle/roggle.log.
+        /// Path to log file. Default is Program Data/Roggle/roggle.log.
         /// </summary>
         public string LogFilePath { get; set; }
         
@@ -38,7 +38,7 @@ namespace Roggle.Core
                 // Write a test entry and create the file if necessary
                 if (!File.Exists(LogFilePath))
                 {
-                    File.AppendAllLines(LogFilePath, new string[] { "Log file successfuly created !" });
+                    File.AppendAllLines(LogFilePath, new string[] { "Roggle in da place !" });
                 }
             }
             catch (Exception e)
@@ -55,15 +55,15 @@ namespace Roggle.Core
 
             #region Check if file size is not max
 
-            bool isLessThanMax = false;
-            FileInfo logFile = new FileInfo(LogFilePath);
+            var isLessThanMax = false;
+            var logFile = new FileInfo(LogFilePath);
 
             while (!isLessThanMax)
             {
                 if (logFile.Length >= MaxFileLength)
                 {
                     // Get all lines
-                    string[] contentLines = File.ReadAllLines(LogFilePath);
+                    var contentLines = File.ReadAllLines(LogFilePath);
 
                     // Skip first line
                     File.WriteAllLines(LogFilePath, contentLines.Skip(1).ToArray());
