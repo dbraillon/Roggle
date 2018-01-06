@@ -1,5 +1,4 @@
-Roggle
-======
+![Roggle](https://github.com/dbraillon/Roggle/blob/master/logo-text.svg)
 
 [![Latest version](https://img.shields.io/nuget/v/Roggle.svg)](https://www.nuget.org/packages/Roggle/)
 [![Build status](https://ci.appveyor.com/api/projects/status/v7k1ujovx59lpe8d?svg=true)](https://ci.appveyor.com/project/dbraillon/roggle)
