@@ -10,5 +10,6 @@
         <requireLicenseAcceptance>true</requireLicenseAcceptance>
         <description>Roggle is a simple log solution for .Net applications.</description>
         <releaseNotes />
+        <iconUrl>https://github.com/dbraillon/Roggle/blob/master/logo.png</iconUrl>
     </metadata>
 </package>

@@ -10,6 +10,7 @@
         <requireLicenseAcceptance>true</requireLicenseAcceptance>
         <description>Roggle.Sentry is an extension to Roggle, it allows to send logs to Sentry.</description>
         <releaseNotes />
+        <iconUrl>https://github.com/dbraillon/Roggle/blob/master/logo.png</iconUrl>
         <dependencies>
             <group />
             <group targetFramework=".NETFramework4.5.0">
